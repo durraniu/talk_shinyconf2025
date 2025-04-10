@@ -20,7 +20,7 @@ format:
 
 [Umair Durrani]{.custom-author}
 
-[https://dru.quarto.pub/slides-de54/]{.custom-url}
+[[https://dru.quarto.pub/slides-de54/](https://dru.quarto.pub/slides-de54/)]{.custom-url}
 
 
 ## About Me
