@@ -3,7 +3,7 @@
     "path": "D:/talk_shinyconf2025/slides.qmd",
     "project_path": "slides.qmd",
     "type": "quarto_markdown",
-    "hash": "0",
+    "hash": "3508757428",
     "contents": "",
     "dirty": false,
     "created": 1744153029119.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "119,3",
-        "scrollLine": "110"
+        "cursorPosition": "575,21",
+        "scrollLine": "562"
     },
     "folds": "",
-    "lastKnownWriteTime": 1744255980,
+    "lastKnownWriteTime": 1744264252,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1744255980380,
+    "last_content_update": 1744264252964,
     "read_only": false,
     "read_only_alternatives": []
 }

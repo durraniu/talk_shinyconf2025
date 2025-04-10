@@ -30,6 +30,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #d3d7c1; background-color: #201f1f; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #d3d7c1; } /* Normal */
+    code span.al { color: #e85848; background-color: #451e1a; font-weight: bold; } /* Alert */
+    code span.an { color: #ad7fa8; } /* Annotation */
+    code span.at { color: #ad7fa8; } /* Attribute */
+    code span.bn { color: #edd400; } /* BaseN */
+    code span.bu { color: #729fcf; } /* BuiltIn */
+    code span.cf { color: #ffffff; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #ce5c00; } /* Char */
+    code span.cn { color: #edd400; font-weight: bold; } /* Constant */
+    code span.co { color: #30a100; } /* Comment */
+    code span.cv { color: #ad7fa8; } /* CommentVar */
+    code span.do { color: #4e9a06; } /* Documentation */
+    code span.dt { color: #508ed8; } /* DataType */
+    code span.dv { color: #edd400; } /* DecVal */
+    code span.er { color: #e85848; text-decoration: underline; } /* Error */
+    code span.ex { color: #508ed8; font-weight: bold; } /* Extension */
+    code span.fl { color: #ce5c00; } /* Float */
+    code span.fu { color: #729fcf; font-weight: bold; } /* Function */
+    code span.im { color: #ad7fa8; } /* Import */
+    code span.in { color: #c0a25f; } /* Information */
+    code span.kw { color: #ffffff; font-weight: bold; } /* Keyword */
+    code span.op { color: #eeeeec; } /* Operator */
+    code span.ot { color: #edd400; } /* Other */
+    code span.pp { color: #ad7fa8; } /* Preprocessor */
+    code span.re { color: #508ed8; background-color: #1c2c3f; } /* RegionMarker */
+    code span.sc { color: #ce5c00; } /* SpecialChar */
+    code span.ss { color: #fce94f; } /* SpecialString */
+    code span.st { color: #edd400; } /* String */
+    code span.va { color: #ce5c00; } /* Variable */
+    code span.vs { color: #c4a000; } /* VerbatimString */
+    code span.wa { color: #e85848; } /* Warning */
   </style>
   <link rel="stylesheet" href="slides_files/libs/revealjs/dist/theme/quarto.css">
   <link href="slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -380,7 +445,7 @@ New Shiny Developer
 </div>
 </div></div>
 <div class="fragment">
-<p><span class="custom-subtitle3">6 practical strategies for development and deployment</span></p>
+<p><span class="custom-subtitle3">Practical strategies for development and deployment</span></p>
 </div>
 </section>
 <section id="strategies" class="slide level2">
@@ -463,6 +528,409 @@ Result
 <p><a href="https://editor.ploomber.io/editor/story-creator-fc9e">Ploomber project link</a></p>
 </div>
 </div></div>
+</section>
+<section id="layout-with-bslib" class="slide level2">
+<h2>Layout with bslib</h2>
+<p><code>bslib::navset_bar</code> in <code>bslib::page_fluid</code></p>
+
+<img src="assets/images/layout1.png" class="r-stretch"></section>
+<section id="layout-with-bslib-1" class="slide level2">
+<h2>Layout with bslib</h2>
+<p>Responsive Design with <code>bslib::layout_columns</code></p>
+
+<img src="assets/images/layout2.png" class="r-stretch"></section>
+<section id="brand.yml-for-theming" class="slide level2">
+<h2>brand.yml for theming</h2>
+<div class="fragment">
+<ul>
+<li>Create a <a href="https://posit-dev.github.io/brand-yml/"><code>_brand.yml</code></a> file in the root of your directory or in <code>inst</code> in a package based project</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>meta<span class="sc">:</span></span>
+<span id="cb1-2"><a href=""></a>  name<span class="sc">:</span> stoRytime</span>
+<span id="cb1-3"><a href=""></a>  description<span class="sc">:</span> <span class="er">|</span></span>
+<span id="cb1-4"><a href=""></a>    Create beautiful and alive stories with text<span class="sc">-</span>generation and image<span class="sc">-</span>generation models<span class="sc">!</span></span>
+<span id="cb1-5"><a href=""></a></span>
+<span id="cb1-6"><a href=""></a>color<span class="sc">:</span></span>
+<span id="cb1-7"><a href=""></a>  palette<span class="sc">:</span></span>
+<span id="cb1-8"><a href=""></a>    foregroundcolor<span class="sc">:</span> <span class="st">"#61212D"</span></span>
+<span id="cb1-9"><a href=""></a>    backgroundcolor<span class="sc">:</span> <span class="st">"#ffffff"</span></span>
+<span id="cb1-10"><a href=""></a>    secondarycolor<span class="sc">:</span> <span class="st">"#03A9F4"</span></span>
+<span id="cb1-11"><a href=""></a>    infocolor<span class="sc">:</span> <span class="st">"#00BCD4"</span></span>
+<span id="cb1-12"><a href=""></a>  foreground<span class="sc">:</span> foregroundcolor</span>
+<span id="cb1-13"><a href=""></a>  background<span class="sc">:</span> backgroundcolor</span>
+<span id="cb1-14"><a href=""></a>  primary<span class="sc">:</span> foregroundcolor</span>
+<span id="cb1-15"><a href=""></a>  secondary<span class="sc">:</span> secondarycolor</span>
+<span id="cb1-16"><a href=""></a>  info<span class="sc">:</span> infocolor</span>
+<span id="cb1-17"><a href=""></a></span>
+<span id="cb1-18"><a href=""></a>typography<span class="sc">:</span></span>
+<span id="cb1-19"><a href=""></a>  fonts<span class="sc">:</span></span>
+<span id="cb1-20"><a href=""></a>    <span class="sc">-</span> family<span class="sc">:</span> ABeeZee</span>
+<span id="cb1-21"><a href=""></a>      source<span class="sc">:</span> bunny</span>
+<span id="cb1-22"><a href=""></a>    <span class="sc">-</span> family<span class="sc">:</span> Architects Daughter</span>
+<span id="cb1-23"><a href=""></a>      source<span class="sc">:</span> bunny</span>
+<span id="cb1-24"><a href=""></a>    <span class="sc">-</span> family<span class="sc">:</span> sans<span class="sc">-</span>serif</span>
+<span id="cb1-25"><a href=""></a>      source<span class="sc">:</span> system</span>
+<span id="cb1-26"><a href=""></a></span>
+<span id="cb1-27"><a href=""></a>  base<span class="sc">:</span></span>
+<span id="cb1-28"><a href=""></a>    family<span class="sc">:</span> ABeeZee, sans<span class="sc">-</span>serif</span>
+<span id="cb1-29"><a href=""></a>  headings<span class="sc">:</span></span>
+<span id="cb1-30"><a href=""></a>    family<span class="sc">:</span> Architects Daughter, sans<span class="sc">-</span>serif</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Then use it in shiny:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">page_fluid</span>(</span>
+<span id="cb2-2"><a href=""></a>   <span class="at">theme =</span> bslib<span class="sc">::</span><span class="fu">bs_theme</span>(<span class="at">brand =</span> <span class="st">"path_to_brand_yml"</span>) <span class="co"># or TRUE</span></span>
+<span id="cb2-3"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="brand.yml-for-theming-1" class="slide level2">
+<h2>brand.yml for theming</h2>
+<ul>
+<li>Use name in <code>meta</code>, logos, fonts with plots, etc. For example, in <code>global.R</code>:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>theme <span class="ot">&lt;-</span> bslib<span class="sc">::</span><span class="fu">bs_theme</span>(<span class="at">brand =</span> <span class="st">"path_to_brand_yml"</span>)</span>
+<span id="cb3-2"><a href=""></a>brand <span class="ot">&lt;-</span> <span class="fu">attr</span>(theme, <span class="st">"brand"</span>)</span>
+<span id="cb3-3"><a href=""></a>app_name <span class="ot">&lt;-</span> brand<span class="sc">$</span>meta<span class="sc">$</span>name<span class="sc">$</span>short</span>
+<span id="cb3-4"><a href=""></a>app_desc <span class="ot">&lt;-</span> brand<span class="sc">$</span>meta<span class="sc">$</span>description</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+<img src="assets/images/brand.png" class="r-stretch"></section>
+<section id="sass-for-customization" class="slide level2">
+<h2>Sass for Customization</h2>
+<div class="columns">
+<div class="column" style="width:70%;">
+<ul>
+<li>Sass for customizing sidebar button</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource sass number-lines code-with-copy"><code class="sourceCode sass"><span id="cb4-1"><a href=""></a><span class="co">/* ---------------Sidebar options-------------- */</span></span>
+<span id="cb4-2"><a href=""></a><span class="va">$sidebar-width</span>: <span class="dv">400</span><span class="dt">px</span></span>
+<span id="cb4-3"><a href=""></a><span class="va">$sidebar-transition</span>: <span class="dv">0.3</span><span class="dt">s</span></span>
+<span id="cb4-4"><a href=""></a><span class="va">$toggle-bg</span>: <span class="fu">var(</span><span class="va">--bs-primary</span><span class="fu">)</span></span>
+<span id="cb4-5"><a href=""></a><span class="va">$toggle-color</span>: <span class="cn">white</span></span>
+<span id="cb4-6"><a href=""></a><span class="va">$toggle-padding</span>: <span class="dv">15</span><span class="dt">px</span> <span class="dv">10</span><span class="dt">px</span></span>
+<span id="cb4-7"><a href=""></a><span class="va">$toggle-radius</span>: <span class="dv">0</span> <span class="dv">5</span><span class="dt">px</span> <span class="dv">5</span><span class="dt">px</span> <span class="dv">0</span></span>
+<span id="cb4-8"><a href=""></a><span class="va">$toggle-top</span>: <span class="dv">100</span><span class="dt">px</span></span>
+<span id="cb4-9"><a href=""></a><span class="va">$toggle-right</span>: <span class="op">-</span><span class="dv">40</span><span class="dt">px</span></span>
+<span id="cb4-10"><a href=""></a></span>
+<span id="cb4-11"><a href=""></a></span>
+<span id="cb4-12"><a href=""></a><span class="co">/* -----------------Sidebar------------------- */</span></span>
+<span id="cb4-13"><a href=""></a><span class="im">@mixin</span> sidebar-toggle</span>
+<span id="cb4-14"><a href=""></a>  <span class="kw">padding</span>: <span class="va">$toggle-padding</span></span>
+<span id="cb4-15"><a href=""></a>  <span class="kw">background-color</span>: <span class="va">$toggle-bg</span></span>
+<span id="cb4-16"><a href=""></a>  <span class="kw">position</span>: <span class="dv">absolute</span></span>
+<span id="cb4-17"><a href=""></a>  <span class="kw">border-radius</span>: <span class="va">$toggle-radius</span></span>
+<span id="cb4-18"><a href=""></a>  <span class="kw">writing-mode</span>: <span class="dv">vertical-rl</span></span>
+<span id="cb4-19"><a href=""></a>  <span class="kw">text-orientation</span>: <span class="dv">mixed</span></span>
+<span id="cb4-20"><a href=""></a>  <span class="kw">height</span>: <span class="bu">auto</span></span>
+<span id="cb4-21"><a href=""></a>  <span class="kw">z-index</span>: <span class="dv">1000</span></span>
+<span id="cb4-22"><a href=""></a>  <span class="kw">display</span>: <span class="dv">flex</span></span>
+<span id="cb4-23"><a href=""></a>  <span class="kw">align-items</span>: <span class="dv">center</span></span>
+<span id="cb4-24"><a href=""></a>  <span class="kw">justify-content</span>: <span class="dv">center</span></span>
+<span id="cb4-25"><a href=""></a>  <span class="kw">transition</span>: <span class="dv">all</span> <span class="va">$sidebar-transition</span></span>
+<span id="cb4-26"><a href=""></a>  <span class="kw">top</span>: <span class="va">$toggle-top</span></span>
+<span id="cb4-27"><a href=""></a>  <span class="kw">right</span>: <span class="va">$toggle-right</span></span>
+<span id="cb4-28"><a href=""></a></span>
+<span id="cb4-29"><a href=""></a><span class="im">@mixin</span> sidebar-main</span>
+<span id="cb4-30"><a href=""></a>  <span class="kw">margin-left</span>: <span class="va">$sidebar-width</span></span>
+<span id="cb4-31"><a href=""></a>  <span class="kw">transition</span>: margin-left <span class="va">$sidebar-transition</span></span>
+<span id="cb4-32"><a href=""></a>  <span class="kw">width</span>: <span class="fu">calc(</span><span class="dv">100</span><span class="dt">%</span> <span class="op">-</span> <span class="va">$sidebar-width</span><span class="fu">)</span></span>
+<span id="cb4-33"><a href=""></a></span>
+<span id="cb4-34"><a href=""></a><span class="im">@mixin</span> sidebar-closed</span>
+<span id="cb4-35"><a href=""></a>  <span class="kw">left</span>: <span class="dv">0</span></span>
+<span id="cb4-36"><a href=""></a>  <span class="kw">right</span>: <span class="bu">auto</span></span>
+<span id="cb4-37"><a href=""></a></span>
+<span id="cb4-38"><a href=""></a><span class="im">@mixin</span> toggle-icon</span>
+<span id="cb4-39"><a href=""></a>  <span class="kw">fill</span>: <span class="va">$toggle-color</span> <span class="at">!important</span></span>
+<span id="cb4-40"><a href=""></a>  <span class="kw">margin-bottom</span>: <span class="dv">10</span><span class="dt">px</span></span>
+<span id="cb4-41"><a href=""></a></span>
+<span id="cb4-42"><a href=""></a><span class="im">@mixin</span> toggle-text</span>
+<span id="cb4-43"><a href=""></a>  <span class="kw">color</span>: <span class="va">$toggle-color</span></span>
+<span id="cb4-44"><a href=""></a>  <span class="kw">font-size</span>: <span class="dv">1.1</span><span class="dt">em</span></span>
+<span id="cb4-45"><a href=""></a>  <span class="kw">text-transform</span>: <span class="dv">uppercase</span></span>
+<span id="cb4-46"><a href=""></a>  <span class="kw">letter-spacing</span>: <span class="dv">1</span><span class="dt">px</span></span>
+<span id="cb4-47"><a href=""></a>  <span class="kw">margin-top</span>: <span class="dv">10</span><span class="dt">px</span></span>
+<span id="cb4-48"><a href=""></a></span>
+<span id="cb4-49"><a href=""></a><span class="im">@mixin</span> <span class="fu">sidebar-layout(</span><span class="va">$sidebar-name</span><span class="op">,</span> <span class="va">$open-text</span><span class="op">,</span> <span class="va">$closed-text</span><span class="fu">)</span></span>
+<span id="cb4-50"><a href=""></a>  <span class="fu">.</span><span class="op">#{</span><span class="va">$sidebar-name</span><span class="op">}</span> <span class="fu">.bslib-sidebar-layout</span></span>
+<span id="cb4-51"><a href=""></a>    <span class="op">&gt;</span> <span class="fu">.collapse-toggle</span></span>
+<span id="cb4-52"><a href=""></a>      <span class="im">@include</span> sidebar-toggle</span>
+<span id="cb4-53"><a href=""></a>      <span class="op">&amp;</span> <span class="op">&gt;</span> <span class="fu">.collapse-icon</span></span>
+<span id="cb4-54"><a href=""></a>        <span class="im">@include</span> toggle-icon</span>
+<span id="cb4-55"><a href=""></a>      <span class="op">&amp;</span><span class="in">::after</span></span>
+<span id="cb4-56"><a href=""></a>        <span class="im">@include</span> toggle-text</span>
+<span id="cb4-57"><a href=""></a>      <span class="op">&amp;</span><span class="ex">[aria-expanded</span><span class="op">=</span><span class="st">'true'</span><span class="ex">]</span><span class="in">::after</span></span>
+<span id="cb4-58"><a href=""></a>        <span class="kw">content</span>: <span class="va">$open-text</span></span>
+<span id="cb4-59"><a href=""></a>      <span class="op">&amp;</span><span class="ex">[aria-expanded</span><span class="op">=</span><span class="st">'false'</span><span class="ex">]</span><span class="in">::after</span></span>
+<span id="cb4-60"><a href=""></a>        <span class="kw">content</span>: <span class="va">$closed-text</span></span>
+<span id="cb4-61"><a href=""></a>    <span class="op">&gt;</span> <span class="fu">.main</span></span>
+<span id="cb4-62"><a href=""></a>      <span class="im">@include</span> sidebar-main</span>
+<span id="cb4-63"><a href=""></a>    <span class="op">&amp;</span><span class="in">:not(.sidebar-open)</span></span>
+<span id="cb4-64"><a href=""></a>      <span class="op">&gt;</span> <span class="fu">.collapse-toggle</span></span>
+<span id="cb4-65"><a href=""></a>        <span class="im">@include</span> sidebar-closed</span>
+<span id="cb4-66"><a href=""></a>      <span class="op">&gt;</span> <span class="fu">.main</span></span>
+<span id="cb4-67"><a href=""></a>        <span class="kw">margin-left</span>: <span class="dv">0</span></span>
+<span id="cb4-68"><a href=""></a>        <span class="kw">width</span>: <span class="dv">100</span><span class="dt">%</span></span>
+<span id="cb4-69"><a href=""></a>    <span class="op">&gt;</span> <span class="fu">.sidebar</span></span>
+<span id="cb4-70"><a href=""></a>      <span class="kw">margin-left</span>: <span class="dv">20</span><span class="dt">px</span></span>
+<span id="cb4-71"><a href=""></a></span>
+<span id="cb4-72"><a href=""></a><span class="im">@include</span> <span class="fu">sidebar-layout(</span><span class="st">"custom-sidebar"</span><span class="op">,</span> <span class="st">"Close Options"</span><span class="op">,</span> <span class="st">"Options"</span><span class="fu">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:30%;">
+<p><img src="assets/images/sass_sidebar.gif"></p>
+</div></div>
+</section></section>
+<section>
+<section id="write-robust-code" class="title-slide slide level1 center">
+<h1>2. Write robust code</h1>
+
+</section>
+<section id="functions" class="slide level2">
+<h2>Functions</h2>
+<ul>
+<li>Example: Creating the ‘Hero Section’:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>create_hero_section <span class="ot">&lt;-</span> <span class="cf">function</span>(title, subtitle){</span>
+<span id="cb5-2"><a href=""></a>  <span class="fu">div</span>(</span>
+<span id="cb5-3"><a href=""></a>    <span class="at">class =</span> <span class="st">"hero-section"</span>,</span>
+<span id="cb5-4"><a href=""></a>    <span class="fu">layout_columns</span>(</span>
+<span id="cb5-5"><a href=""></a>      <span class="at">col_widths =</span> <span class="fu">breakpoints</span>(</span>
+<span id="cb5-6"><a href=""></a>        <span class="at">sm =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">10</span>, <span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb5-7"><a href=""></a>        <span class="at">md =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb5-8"><a href=""></a>      ),</span>
+<span id="cb5-9"><a href=""></a>      <span class="fu">div</span>(</span>
+<span id="cb5-10"><a href=""></a>        <span class="fu">h1</span>(title, <span class="at">class =</span> <span class="st">"hero-title"</span>),</span>
+<span id="cb5-11"><a href=""></a>        <span class="fu">p</span>(subtitle, <span class="at">class =</span> <span class="st">"hero-text"</span>),</span>
+<span id="cb5-12"><a href=""></a>        <span class="fu">input_task_button</span>(<span class="st">"get_started"</span>, <span class="st">"GET STARTED"</span>, <span class="at">class =</span> <span class="st">"btn-lg"</span>, <span class="at">onclick =</span> <span class="st">"scrollToCards()"</span>)</span>
+<span id="cb5-13"><a href=""></a>      ),</span>
+<span id="cb5-14"><a href=""></a>      <span class="fu">slickROutput</span>(<span class="st">"s"</span>)</span>
+<span id="cb5-15"><a href=""></a>    )</span>
+<span id="cb5-16"><a href=""></a>  )</span>
+<span id="cb5-17"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><a href="https://mastering-shiny.org/scaling-functions.html">Functions Chapter from Mastering Shiny</a></p>
+</section>
+<section id="tests" class="slide level2">
+<h2>Tests</h2>
+<ul>
+<li>Unit tests, <code>golem</code>, <code>shinytest2</code><br>
+</li>
+<li>Example: Unit test for <code>get_story</code> function</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p>Function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>get_story <span class="ot">&lt;-</span> <span class="cf">function</span>(prompt,</span>
+<span id="cb6-2"><a href=""></a>                      <span class="at">num_of_sentences =</span> <span class="dv">5</span>,</span>
+<span id="cb6-3"><a href=""></a>                      <span class="at">max_tokens =</span> <span class="dv">1000</span>,</span>
+<span id="cb6-4"><a href=""></a>                      <span class="at">ACCOUNT_ID =</span> <span class="fu">Sys.getenv</span>(<span class="st">"ACCOUNT_ID"</span>),</span>
+<span id="cb6-5"><a href=""></a>                      <span class="at">API_KEY =</span> <span class="fu">Sys.getenv</span>(<span class="st">"API_KEY"</span>),</span>
+<span id="cb6-6"><a href=""></a>                      <span class="at">base_url =</span> <span class="fu">cf_base_url</span>()){</span>
+<span id="cb6-7"><a href=""></a></span>
+<span id="cb6-8"><a href=""></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(prompt) <span class="sc">|</span> num_of_sentences <span class="sc">&lt;</span> <span class="dv">3</span>){</span>
+<span id="cb6-9"><a href=""></a>    <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb6-10"><a href=""></a>  }</span>
+<span id="cb6-11"><a href=""></a></span>
+<span id="cb6-12"><a href=""></a>  <span class="cf">if</span> (<span class="fu">test_profanity</span>(prompt)){</span>
+<span id="cb6-13"><a href=""></a>    <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb6-14"><a href=""></a>  }</span>
+<span id="cb6-15"><a href=""></a>  url_txt <span class="ot">&lt;-</span> <span class="fu">paste0</span>(base_url, ACCOUNT_ID, <span class="st">"/ai/run/@cf/meta/llama-3.1-8b-instruct-fast"</span>)</span>
+<span id="cb6-16"><a href=""></a></span>
+<span id="cb6-17"><a href=""></a>  <span class="co"># Make an API request</span></span>
+<span id="cb6-18"><a href=""></a>  response_text <span class="ot">&lt;-</span> httr2<span class="sc">::</span><span class="fu">request</span>(url_txt) <span class="sc">|&gt;</span></span>
+<span id="cb6-19"><a href=""></a>    httr2<span class="sc">::</span><span class="fu">req_headers</span>(</span>
+<span id="cb6-20"><a href=""></a>      <span class="st">"Authorization"</span> <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">"Bearer"</span>, API_KEY)</span>
+<span id="cb6-21"><a href=""></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb6-22"><a href=""></a>    httr2<span class="sc">::</span><span class="fu">req_body_json</span>(<span class="st">"..."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-23"><a href=""></a>    httr2<span class="sc">::</span><span class="fu">req_method</span>(<span class="st">"POST"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-24"><a href=""></a>    httr2<span class="sc">::</span><span class="fu">req_error</span>(<span class="at">is_error =</span> \(resp) <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-25"><a href=""></a>    httr2<span class="sc">::</span><span class="fu">req_perform</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-26"><a href=""></a>    httr2<span class="sc">::</span><span class="fu">resp_body_json</span>()</span>
+<span id="cb6-27"><a href=""></a></span>
+<span id="cb6-28"><a href=""></a>  <span class="st">"&lt;Process and return response&gt;"</span></span>
+<span id="cb6-29"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:40%;">
+<p>Unit test with <a href="https://enpiar.com/httptest2/"><code>httptest2</code></a> and <code>testthat</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">with_mock_dir</span>(<span class="st">"cfgsp"</span>, {</span>
+<span id="cb7-2"><a href=""></a>  <span class="fu">test_that</span>(<span class="st">"get_story returns story when API response is successful"</span>, {</span>
+<span id="cb7-3"><a href=""></a>    res <span class="ot">&lt;-</span> <span class="fu">get_story</span>(<span class="st">"Snow white opened the door"</span>)</span>
+<span id="cb7-4"><a href=""></a>    <span class="fu">expect_type</span>(res, <span class="st">"character"</span>)</span>
+<span id="cb7-5"><a href=""></a>  })</span>
+<span id="cb7-6"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div></div>
+<p><a href="https://mastering-shiny.org/scaling-testing.html">Testing Chapter from Mastering Shiny</a></p>
+</section>
+<section id="modules" class="slide level2">
+<h2>Modules</h2>
+<blockquote>
+<p>My Shiny hot take is that modules are <strong>not</strong> an advanced topic. (Emily Riederer)</p>
+</blockquote>
+<p><a href="https://emilyriederer.netlify.app/post/shiny-modules/">Modules avoid clutter and make debugging easier</a></p>
+<ul>
+<li>Example: <strong>Asynchronous file downloads with <code>ExtendedTask</code> and <code>mirai</code></strong>:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" data-code-line-numbers="2|9-13|15-21|29-31|33-39|41-53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="co"># Module</span></span>
+<span id="cb8-2"><a href=""></a>mod_download_stories_ui <span class="ot">&lt;-</span> <span class="cf">function</span>(id, title) {</span>
+<span id="cb8-3"><a href=""></a>  ns <span class="ot">&lt;-</span> <span class="fu">NS</span>(id)</span>
+<span id="cb8-4"><a href=""></a>  <span class="fu">card</span>(</span>
+<span id="cb8-5"><a href=""></a>    <span class="at">height =</span> <span class="dv">400</span>,</span>
+<span id="cb8-6"><a href=""></a>    <span class="at">full_screen =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-7"><a href=""></a>    <span class="fu">card_header</span>(</span>
+<span id="cb8-8"><a href=""></a>      title,</span>
+<span id="cb8-9"><a href=""></a>      <span class="fu">input_task_button</span>(</span>
+<span id="cb8-10"><a href=""></a>        <span class="fu">ns</span>(<span class="st">"downloadBtn"</span>),</span>
+<span id="cb8-11"><a href=""></a>        <span class="at">label =</span> <span class="st">"Download and Display"</span>,</span>
+<span id="cb8-12"><a href=""></a>        <span class="at">class =</span> <span class="st">"btn-sm btn-primary"</span></span>
+<span id="cb8-13"><a href=""></a>      )</span>
+<span id="cb8-14"><a href=""></a>    ),</span>
+<span id="cb8-15"><a href=""></a>    <span class="fu">card_body</span>(</span>
+<span id="cb8-16"><a href=""></a>      tags<span class="sc">$</span><span class="fu">iframe</span>(</span>
+<span id="cb8-17"><a href=""></a>        <span class="at">id =</span> <span class="fu">paste0</span>(<span class="st">"htmlFrame"</span>, id),</span>
+<span id="cb8-18"><a href=""></a>        <span class="at">style =</span> <span class="st">"width: 100%; height: 100%; border: none;"</span></span>
+<span id="cb8-19"><a href=""></a>      )</span>
+<span id="cb8-20"><a href=""></a>    )</span>
+<span id="cb8-21"><a href=""></a>  )</span>
+<span id="cb8-22"><a href=""></a>}</span>
+<span id="cb8-23"><a href=""></a></span>
+<span id="cb8-24"><a href=""></a>mod_download_stories_server <span class="ot">&lt;-</span> <span class="cf">function</span>(id, title, html_file){</span>
+<span id="cb8-25"><a href=""></a>  <span class="fu">moduleServer</span>(id, <span class="cf">function</span>(input, output, session){</span>
+<span id="cb8-26"><a href=""></a>    ns <span class="ot">&lt;-</span> session<span class="sc">$</span>ns</span>
+<span id="cb8-27"><a href=""></a>    base_url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/durraniu/examples-storytime/refs/heads/main/htmls/"</span></span>
+<span id="cb8-28"><a href=""></a></span>
+<span id="cb8-29"><a href=""></a>    task <span class="ot">&lt;-</span> ExtendedTask<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb8-30"><a href=""></a>      <span class="cf">function</span>(url, download_and_render_html) <span class="fu">mirai</span>(<span class="fu">download_and_render_html</span>(url), <span class="fu">environment</span>())</span>
+<span id="cb8-31"><a href=""></a>    ) <span class="sc">|&gt;</span> <span class="fu">bind_task_button</span>(<span class="st">"downloadBtn"</span>)</span>
+<span id="cb8-32"><a href=""></a></span>
+<span id="cb8-33"><a href=""></a>    <span class="fu">observeEvent</span>(input<span class="sc">$</span>downloadBtn, {</span>
+<span id="cb8-34"><a href=""></a>      <span class="co"># Complete URL for this HTML file</span></span>
+<span id="cb8-35"><a href=""></a>      url <span class="ot">&lt;-</span> <span class="fu">paste0</span>(base_url, html_file)</span>
+<span id="cb8-36"><a href=""></a></span>
+<span id="cb8-37"><a href=""></a>      <span class="co"># Download the HTML content</span></span>
+<span id="cb8-38"><a href=""></a>      task<span class="sc">$</span><span class="fu">invoke</span>(url, download_and_render_html)</span>
+<span id="cb8-39"><a href=""></a>    })</span>
+<span id="cb8-40"><a href=""></a></span>
+<span id="cb8-41"><a href=""></a>    <span class="fu">observe</span>({</span>
+<span id="cb8-42"><a href=""></a>      html_content <span class="ot">&lt;-</span> task<span class="sc">$</span><span class="fu">result</span>()</span>
+<span id="cb8-43"><a href=""></a></span>
+<span id="cb8-44"><a href=""></a>      <span class="fu">showNotification</span>(<span class="fu">paste0</span>(<span class="st">"Rendering "</span>, title, <span class="st">"..."</span>), <span class="at">type =</span> <span class="st">"message"</span>, <span class="at">duration =</span> <span class="dv">2</span>)</span>
+<span id="cb8-45"><a href=""></a></span>
+<span id="cb8-46"><a href=""></a>      <span class="co"># Set the iframe source to display the HTML content</span></span>
+<span id="cb8-47"><a href=""></a>      js_code <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">'</span></span>
+<span id="cb8-48"><a href=""></a><span class="st">          var iframe = document.getElementById("htmlFrame%s");</span></span>
+<span id="cb8-49"><a href=""></a><span class="st">          iframe.srcdoc = %s;</span></span>
+<span id="cb8-50"><a href=""></a><span class="st">        '</span>, id, jsonlite<span class="sc">::</span><span class="fu">toJSON</span>(html_content))</span>
+<span id="cb8-51"><a href=""></a></span>
+<span id="cb8-52"><a href=""></a>      shinyjs<span class="sc">::</span><span class="fu">runjs</span>(js_code)</span>
+<span id="cb8-53"><a href=""></a>    })</span>
+<span id="cb8-54"><a href=""></a>  })</span>
+<span id="cb8-55"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="modules-1" class="slide level2">
+<h2>Modules</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="co"># UI:</span></span>
+<span id="cb9-2"><a href=""></a><span class="fu">layout_column_wrap</span>(</span>
+<span id="cb9-3"><a href=""></a>    <span class="at">width =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>,</span>
+<span id="cb9-4"><a href=""></a>    <span class="fu">mod_download_stories_ui</span>(<span class="st">"apocalypse"</span>, <span class="st">"Apocalypse"</span>),</span>
+<span id="cb9-5"><a href=""></a>    <span class="fu">mod_download_stories_ui</span>(<span class="st">"dracula"</span>, <span class="st">"Dracula"</span>)</span>
+<span id="cb9-6"><a href=""></a>)</span>
+<span id="cb9-7"><a href=""></a><span class="co"># Server:</span></span>
+<span id="cb9-8"><a href=""></a><span class="fu">mod_download_stories_server</span>(<span class="st">"apocalypse"</span>, <span class="st">"Apocalypse"</span>, <span class="st">"apocalypse.html"</span>)</span>
+<span id="cb9-9"><a href=""></a><span class="fu">mod_download_stories_server</span>(<span class="st">"dracula"</span>, <span class="st">"Dracula"</span>, <span class="st">"dracula.html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+<img src="assets/images/modules.png" class="r-stretch"></section></section>
+<section>
+<section id="monitor-your-app-for-errors" class="title-slide slide level1 center">
+<h1>3. Monitor your app for errors</h1>
+
+</section>
+<section id="use-sentryr" class="slide level2">
+<h2>Use <code>sentryR</code></h2>
+<blockquote>
+<p><a href="https://sentry.io/welcome/">Sentry</a> is an application monitoring software<br>
+- <a href="https://github.com/jcpsantiago/sentryR"><code>sentryR</code></a> is an unofficial R client for Sentry</p>
+</blockquote>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img src="assets/images/sentry1.png"></p>
+</div><div class="column" style="width:50%;">
+<p><img src="assets/images/sentry2.png"></p>
+</div></div>
+</section>
+<section id="sentryr-setup" class="slide level2">
+<h2><code>sentryR</code> setup</h2>
+
+<img src="assets/images/sentry3.png" class="r-stretch"><div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>sentryR<span class="sc">::</span><span class="fu">configure_sentry</span>(</span>
+<span id="cb10-2"><a href=""></a>  <span class="at">dsn =</span> <span class="fu">Sys.getenv</span>(<span class="st">"SENTRY_KEY"</span>),</span>
+<span id="cb10-3"><a href=""></a>  <span class="at">app_name =</span> <span class="st">"stoRytime"</span>,</span>
+<span id="cb10-4"><a href=""></a>  <span class="at">app_version =</span> <span class="st">"1.0.0"</span></span>
+<span id="cb10-5"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="monitor-errors" class="slide level2">
+<h2>Monitor errors</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11" data-code-line-numbers="1|2-3|11|12|13-15|16|19-26|29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>get_browser_info <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb11-2"><a href=""></a>  user_agent <span class="ot">&lt;-</span> session<span class="sc">$</span>request<span class="sc">$</span>HTTP_USER_AGENT <span class="co"># browser</span></span>
+<span id="cb11-3"><a href=""></a>  remote_addr <span class="ot">&lt;-</span> session<span class="sc">$</span>request<span class="sc">$</span>REMOTE_ADDR <span class="co"># ip</span></span>
+<span id="cb11-4"><a href=""></a>  </span>
+<span id="cb11-5"><a href=""></a>  <span class="fu">list</span>(</span>
+<span id="cb11-6"><a href=""></a>    <span class="at">user_agent =</span> <span class="cf">if</span> (<span class="fu">is.null</span>(user_agent)) <span class="st">"Unknown"</span> <span class="cf">else</span> user_agent,</span>
+<span id="cb11-7"><a href=""></a>    <span class="at">remote_addr =</span> <span class="cf">if</span> (<span class="fu">is.null</span>(remote_addr)) <span class="st">"Unknown"</span> <span class="cf">else</span> remote_addr</span>
+<span id="cb11-8"><a href=""></a>  )</span>
+<span id="cb11-9"><a href=""></a>}</span>
+<span id="cb11-10"><a href=""></a></span>
+<span id="cb11-11"><a href=""></a>error_handler <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb11-12"><a href=""></a>  e <span class="ot">&lt;-</span> <span class="fu">get</span>(<span class="st">"e"</span>, <span class="at">envir =</span> <span class="fu">parent.frame</span>())</span>
+<span id="cb11-13"><a href=""></a>  stack_trace <span class="ot">&lt;-</span> shiny<span class="sc">::</span><span class="fu">printStackTrace</span>(e) <span class="sc">|&gt;</span></span>
+<span id="cb11-14"><a href=""></a>    utils<span class="sc">::</span><span class="fu">capture.output</span>(<span class="at">type =</span> <span class="st">"message"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-15"><a href=""></a>    <span class="fu">list</span>()</span>
+<span id="cb11-16"><a href=""></a>  browser <span class="ot">&lt;-</span> <span class="fu">get_browser_info</span>()</span>
+<span id="cb11-17"><a href=""></a>  </span>
+<span id="cb11-18"><a href=""></a>  <span class="co"># Send the original error object with additional context to Sentry</span></span>
+<span id="cb11-19"><a href=""></a>  sentryR<span class="sc">::</span><span class="fu">capture</span>(</span>
+<span id="cb11-20"><a href=""></a>    <span class="at">message =</span> <span class="fu">geterrmessage</span>(),</span>
+<span id="cb11-21"><a href=""></a>    <span class="at">extra =</span> <span class="fu">list</span>(</span>
+<span id="cb11-22"><a href=""></a>      <span class="at">Browser =</span> browser<span class="sc">$</span>user_agent,</span>
+<span id="cb11-23"><a href=""></a>      <span class="at">IP =</span> browser<span class="sc">$</span>remote_addr,</span>
+<span id="cb11-24"><a href=""></a>      <span class="st">"Stack trace"</span> <span class="ot">=</span>  stack_trace</span>
+<span id="cb11-25"><a href=""></a>    )</span>
+<span id="cb11-26"><a href=""></a>  )</span>
+<span id="cb11-27"><a href=""></a>}</span>
+<span id="cb11-28"><a href=""></a></span>
+<span id="cb11-29"><a href=""></a><span class="fu">options</span>(<span class="at">shiny.error =</span> error_handler)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<video id="video_shortcode_videojs_video2" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="assets/videos/sentry.mp4"></video>
+</div></div>
+</section>
+<section id="community" class="slide level2">
+<h2>Community</h2>
+<ul>
+<li>Using brand_yml: <code>Garrick Aden-Buie</code><br>
+</li>
+<li>Creating custom sidebar button: <code>Vedha Viyash</code></li>
+<li><a href="https://books.ropensci.org/http-testing/">http testing</a>: <code>Maëlle Salmon</code></li>
+<li>Logging (<code>shiny::printStackTrace</code>): <code>Tan Ho</code></li>
+</ul>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
@@ -679,6 +1147,82 @@ Result
         ]
       });
     </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
@@ -867,6 +1411,7 @@ Result
     });
     </script>
     <script>videojs(video_shortcode_videojs_video1);</script>
+    <script>videojs(video_shortcode_videojs_video2);</script>
     
 
 </body></html>

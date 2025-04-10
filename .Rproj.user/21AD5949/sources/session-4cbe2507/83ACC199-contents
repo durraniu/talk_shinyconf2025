@@ -40,7 +40,35 @@ Shiny makes it easy to build interactive web applications with R, but as your ap
 
 We’ll start with AI-assisted development, using tools like Shiny Assistant and Ploomber AI to quickly generate wireframes and layouts. Then, we’ll explore bslib for modern designs, responsive layouts, and simple theming, and how sass can help customize styles even further. 
 
+
+
+
+
+
+
+
+
+
+
+
+
 I’ll explain why it’s important to use functions and modules from the beginning and how frameworks like golem and rhino enforce best practices for structuring and dockerizing apps, and writing tests.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Beyond development, I’ll share lessons on monitoring live apps using sentryR to catch errors and improve performance. 
