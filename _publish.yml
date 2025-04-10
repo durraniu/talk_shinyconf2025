@@ -1,0 +1,4 @@
+- source: slides.qmd
+  quarto-pub:
+    - id: ac140786-6755-4902-9bb2-54fe73b16161
+      url: 'https://dru.quarto.pub/slides-de54'

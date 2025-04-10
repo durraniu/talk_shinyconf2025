@@ -20,7 +20,7 @@ format:
 
 [Umair Durrani]{.custom-author}
 
-[[Slides: to be changed](https://example.com)]{.custom-url}
+[https://dru.quarto.pub/slides-de54/]{.custom-url}
 
 
 ## About Me
@@ -82,7 +82,7 @@ format:
   <li>Write robust code</li>
   <li>Monitor your app</li>
   <li>Improve user experience</li>
-  <li>Explore the deployment options</li>
+  <li>Explore deployment options</li>
   <li>Learn and Practice</li>
 </ol>
 
@@ -535,8 +535,6 @@ sentryR::configure_sentry(
 
 ## Monitor errors
 
-:::: columns
-::: {.column width="50%"}
 ```{r}
 #| echo: true
 #| eval: false
@@ -571,18 +569,51 @@ error_handler <- function() {
 
 options(shiny.error = error_handler)
 ```
-:::
-  
-::: {.column width="50%"}
+
+## Monitor errors
+
 {{< video assets/videos/sentry.mp4 >}}
+
+
+# 4. Improve user experience
+
+## Improve user experience
+
+- `shiny::useBusyIndicators()` or `waiter`  
+- Async programming with `ExtendedTask`  
+- Homepage with buttons and guides for complex apps (e.g., `cicerone`)  
+
+
+# 5. Explore deployment options
+
+## Deployment
+
+- Simple and easy, but less flexible/costly: shinyapps.io and Posit Connect Cloud  
+- Hard: Virtual machines on AWS or Google Cloud, etc.  
+
+<br>
+
+::: {.fragment}
+- Google Cloud Run (requires docker) --> `golem`, [`shinydocker`](https://github.com/coatless-rpkg/shinydocker), etc.
+
+<img src="assets/images/containers2.webp"> 
 :::
-::::
+
+## Deployment
+
+{{< video assets/videos/cloud_run.mp4 >}}
+
+
+# 6. Learn and Practice 
 
 
 
+## Resources
 
-
-
+- [Books](https://www.bigbookofr.com/chapters/shiny)  
+- [Data Science Learning Community (DSLC)](https://dslc.io/)  
+  * shiny club  
+- [Shiny Meetings](https://github.com/shiny-meetings/shiny-meetings) 
 
 ## Community
 
@@ -591,3 +622,42 @@ options(shiny.error = error_handler)
 - [http testing](https://books.ropensci.org/http-testing/):  `Maëlle Salmon`
 - Logging (`shiny::printStackTrace`): `Tan Ho`  
 
+
+
+## Shiny Meetings 
+
+Learn and practice together!  
+
+<img src="assets/images/shiny_meetings.gif"> 
+
+
+## Questions
+
+- Join Shiny Meetings: https://github.com/shiny-meetings/shiny-meetings  
+- @transport-talk.bsky.social
+
+:::: {.columns}
+::: {.column width="50%"}
+**Demo App**
+
+<img src="assets/images/qr_app.png" width="250">
+:::
+::: {.column width="50%"}
+**Demo App Source**
+
+<img src="assets/images/qr_app_source.png" width="250">
+:::
+::::
+
+:::: {.columns}
+::: {.column width="50%"}
+**Slides**
+
+<img src="assets/images/qr_slides.png" width="250">
+:::
+::: {.column width="50%"}
+**Slides Source**
+
+<img src="assets/images/qr_slides_source.png" width="250">
+:::
+::::

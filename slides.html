@@ -397,7 +397,7 @@
 <p><span class="custom-title">Building Your Pit of Success</span></p>
 <p><span class="custom-subtitle1">Practical Strategies for Shiny App</span> <span class="custom-subtitle2">Development and Deployment</span></p>
 <p><span class="custom-author">Umair Durrani</span></p>
-<p><span class="custom-url"><a href="https://example.com">Slides: to be changed</a></span></p>
+<p><span class="custom-url">https://dru.quarto.pub/slides-de54/</span></p>
 </section>
 <section id="about-me" class="slide level2">
 <h2>About Me</h2>
@@ -464,7 +464,7 @@ Monitor your app
 Improve user experience
 </li>
 <li>
-Explore the deployment options
+Explore deployment options
 </li>
 <li>
 Learn and Practice
@@ -885,8 +885,6 @@ Result
 </section>
 <section id="monitor-errors" class="slide level2">
 <h2>Monitor errors</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11" data-code-line-numbers="1|2-3|11|12|13-15|16|19-26|29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>get_browser_info <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
 <span id="cb11-2"><a href=""></a>  user_agent <span class="ot">&lt;-</span> session<span class="sc">$</span>request<span class="sc">$</span>HTTP_USER_AGENT <span class="co"># browser</span></span>
@@ -918,9 +916,67 @@ Result
 <span id="cb11-28"><a href=""></a></span>
 <span id="cb11-29"><a href=""></a><span class="fu">options</span>(<span class="at">shiny.error =</span> error_handler)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div><div class="column" style="width:50%;">
+</section>
+<section id="monitor-errors-1" class="slide level2">
+<h2>Monitor errors</h2>
 <video id="video_shortcode_videojs_video2" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="assets/videos/sentry.mp4"></video>
-</div></div>
+</section></section>
+<section>
+<section id="improve-user-experience" class="title-slide slide level1 center">
+<h1>4. Improve user experience</h1>
+
+</section>
+<section id="improve-user-experience-1" class="slide level2">
+<h2>Improve user experience</h2>
+<ul>
+<li><code>shiny::useBusyIndicators()</code> or <code>waiter</code><br>
+</li>
+<li>Async programming with <code>ExtendedTask</code><br>
+</li>
+<li>Homepage with buttons and guides for complex apps (e.g., <code>cicerone</code>)</li>
+</ul>
+</section></section>
+<section>
+<section id="explore-deployment-options" class="title-slide slide level1 center">
+<h1>5. Explore deployment options</h1>
+
+</section>
+<section id="deployment" class="slide level2">
+<h2>Deployment</h2>
+<ul>
+<li>Simple and easy, but less flexible/costly: shinyapps.io and Posit Connect Cloud<br>
+</li>
+<li>Hard: Virtual machines on AWS or Google Cloud, etc.</li>
+</ul>
+<p><br></p>
+<div class="fragment">
+<ul>
+<li>Google Cloud Run (requires docker) –&gt; <code>golem</code>, <a href="https://github.com/coatless-rpkg/shinydocker"><code>shinydocker</code></a>, etc.</li>
+</ul>
+<p><img src="assets/images/containers2.webp"></p>
+</div>
+</section>
+<section id="deployment-1" class="slide level2">
+<h2>Deployment</h2>
+<video id="video_shortcode_videojs_video3" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="assets/videos/cloud_run.mp4"></video>
+</section></section>
+<section>
+<section id="learn-and-practice" class="title-slide slide level1 center">
+<h1>6. Learn and Practice</h1>
+
+</section>
+<section id="resources" class="slide level2">
+<h2>Resources</h2>
+<ul>
+<li><a href="https://www.bigbookofr.com/chapters/shiny">Books</a><br>
+</li>
+<li><a href="https://dslc.io/">Data Science Learning Community (DSLC)</a>
+<ul>
+<li>shiny club<br>
+</li>
+</ul></li>
+<li><a href="https://github.com/shiny-meetings/shiny-meetings">Shiny Meetings</a></li>
+</ul>
 </section>
 <section id="community" class="slide level2">
 <h2>Community</h2>
@@ -931,6 +987,35 @@ Result
 <li><a href="https://books.ropensci.org/http-testing/">http testing</a>: <code>Maëlle Salmon</code></li>
 <li>Logging (<code>shiny::printStackTrace</code>): <code>Tan Ho</code></li>
 </ul>
+</section>
+<section id="shiny-meetings" class="slide level2">
+<h2>Shiny Meetings</h2>
+<p>Learn and practice together!</p>
+
+<img src="assets/images/shiny_meetings.gif" class="r-stretch"></section>
+<section id="questions" class="slide level2">
+<h2>Questions</h2>
+<ul>
+<li>Join Shiny Meetings: https://github.com/shiny-meetings/shiny-meetings<br>
+</li>
+<li><span class="citation" data-cites="transport-talk.bsky.social">@transport-talk.bsky.social</span></li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Demo App</strong></p>
+<p><img src="assets/images/qr_app.png" width="250"></p>
+</div><div class="column" style="width:50%;">
+<p><strong>Demo App Source</strong></p>
+<p><img src="assets/images/qr_app_source.png" width="250"></p>
+</div></div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Slides</strong></p>
+<p><img src="assets/images/qr_slides.png" width="250"></p>
+</div><div class="column" style="width:50%;">
+<p><strong>Slides Source</strong></p>
+<p><img src="assets/images/qr_slides_source.png" width="250"></p>
+</div></div>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
@@ -1412,6 +1497,7 @@ Result
     </script>
     <script>videojs(video_shortcode_videojs_video1);</script>
     <script>videojs(video_shortcode_videojs_video2);</script>
+    <script>videojs(video_shortcode_videojs_video3);</script>
     
 
 </body></html>

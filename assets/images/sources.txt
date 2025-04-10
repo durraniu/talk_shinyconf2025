@@ -1,3 +1,4 @@
 flow 1-4: https://vocus-cc.translate.goog/article/67bca630fd89780001be9d21?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp&_x_tr_hist=true
 developer: https://unsplash.com/photos/a-man-sitting-in-front-of-a-laptop-computer-Ili1gmB9Jes
 story_spark: https://storyspark.ai/
+docker image: https://nilesh93.medium.com/practical-guide-on-writing-a-dockerfile-for-your-application-89376f88b3b5
