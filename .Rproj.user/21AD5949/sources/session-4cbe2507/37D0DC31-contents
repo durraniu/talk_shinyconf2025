@@ -1,0 +1,488 @@
+---
+pagetitle: "stoRy time with Shiny, Quarto, and Google Cloud Run"
+format: 
+  revealjs:
+    transition: "fade"
+    backgroundTransition: "fade"
+    height: 900
+    width: 1600
+    highlight-style: oblivion
+    theme: [night, assets/scss/custom.scss]
+---
+
+##  {background-image="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3A2cTRwdWt5aDZ3ZjRnZDR6YzM0azV6YWJ3dzNmZmp3NWx0cnc5YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0aPoPGSV1gTGgTmblM/giphy.gif"}
+
+[stoRy time with Shiny, Quarto, and Google Cloud Run]{.custom-title}
+
+[Write and Illustrate Stories with AI]{.custom-subtitle}
+
+[Umair Durrani]{.custom-author}
+
+[[https://dru.quarto.pub/slides-3f3c/](https://dru.quarto.pub/slides-3f3c/)]{.custom-url}
+
+
+# Everyone enjoys stories
+
+
+## AI is great at *making up stuff*
+
+![](assets/images/gpt.webp)
+
+::: footer
+[Source 1;](https://customgpt.ai/hallucinations/) [Source 2](https://towardsdatascience.com/chatgpt-insists-i-am-dead-and-the-problem-with-language-models-db5a36c22f11)
+:::
+
+# AI is great at <s>*making up stuff*</s> creating stories 🙂
+
+
+## What is stoRy time?
+
+
+A web application that:  
+
+* takes the first sentence of a story you want to write  
+* uses generative AI models to create a full story with images  
+
+
+# Why R in stoRy time?
+
+![](https://upload.wikimedia.org/wikipedia/commons/1/1b/R_logo.svg)
+
+# Let' take a look at stoRy time
+
+[App Link](https://storytime-209667139353.us-central1.run.app/){preview-link="true"}
+
+![](assets/images/qr-code.png)
+
+##
+
+![](assets/images/app_main.png)
+
+##
+
+![](assets/images/app_workflow.gif)
+
+## You can also change the slide theme
+
+![](assets/images/app_change_theme.png)
+
+## You can also change the slide theme
+
+![](assets/images/app_new_theme.png)
+
+## Who am I 
+
+- Umair Durrani
+
+- PhD and Postdoc from University of Windsor
+
+- Data Scientist at Presage Group
+  - Develop apps
+  - Analyze and present data
+  
+
+## Who are you
+
+::: columns
+::: {.column width="40%"}
+
+![](assets/images/paul1.png)
+:::
+
+::: {.column width="60%"}
+
+<h4>Developer</h4>
+
+<br>
+
+<h4>User</h4>
+
+:::
+:::
+
+
+## How does stoRy time work? and why you should care?
+
+* You learn a lot of useful stuff working on such project:  
+
+  - Making REST API requests    
+  - Develop web applications  
+  - Create parameterized documents  
+  - Working with Cloud
+  
+  
+# Step 1: Create story text {background-image="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExeTZtYjBmOHN4Y2swMWtwbGIybTQ5dnRnczk1bzJ0MzQ4czE4YjUzZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/61fyqLCQTlo3pgSuaW/giphy.gif"}
+
+## How to generate a story with AI?
+
+Several text generation models exist.   
+
+I used `llama-3.1-8b-instruct` from [Cloudflare Workers AI Models API](https://developers.cloudflare.com/workers-ai/models/).
+
+![](assets/images/cloudflare_models.png)
+
+
+## What's an API?  
+
+> An API is a programmatic way to interact with a webservice that allows us to automate the retrieval of data.
+
+- GET
+- POST
+
+I used the `httr2` R package to make HTTP requests to Cloudflare Workers AI Models endpoint
+
+::: footer
+Source: [Talk by Ted Laderas](https://laderast.github.io/intro_apis_json_cascadia/#/what-are-apis)
+:::
+
+
+
+## Function to generate story
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "1-6|18-22|23-30|31-34|35-39"
+get_story <- function(prompt,
+                      num_of_sentences = 5,
+                      max_tokens = 1000,
+                      ACCOUNT_ID = Sys.getenv("ACCOUNT_ID"),
+                      API_KEY = Sys.getenv("API_KEY"),
+                      base_url = cf_base_url()){
+
+  if (is.null(prompt) | num_of_sentences < 3){
+    return(NULL)
+  }
+
+  if (test_profanity(prompt)){
+    return(NULL)
+  }
+
+  url_txt <- paste0(base_url, ACCOUNT_ID, "/ai/run/@cf/meta/llama-3.1-8b-instruct")
+
+  # Make an API request
+  response_text <- httr2::request(url_txt) |>
+    httr2::req_headers(
+      "Authorization" = paste("Bearer", API_KEY)
+    ) |>
+    httr2::req_body_json(list(
+      max_tokens = max_tokens,
+      messages = list(
+        list(role = "system",
+             content = paste0("You tell short stories.
+             Each sentence must describe all details.
+             Each story must have ",  num_of_sentences,  " sentences.
+             The story must have a beginning, a climax and an end.")),
+        list(
+          role = "user",
+          content = prompt
+        )
+      ))) |>
+    httr2::req_method("POST") |>
+    httr2::req_error(is_error = \(resp) FALSE) |>
+    httr2::req_perform() |>
+    httr2::resp_body_json()
+
+  # If response is successful, append it to the user prompt
+  # clean it, and split the text into 5 sentences
+  if (isTRUE(response_text$success)){
+    full_text <- response_text$result$response #paste(prompt, response_text$result$response)
+    cleaned_text <- gsub("\n", "", full_text)
+    split_text <- unlist(strsplit(cleaned_text, "(?<=[.])\\s*(?=[A-Z])", perl = TRUE))
+  } else {
+    split_text <- NULL
+  }
+
+  # c(prompt, split_text)
+  split_text
+}
+```
+
+## Test the function
+
+```{r}
+#| echo: true
+#| eval: false
+new_story <- get_story(
+  prompt = "There once was a prince in the land of Persia.",
+  num_of_sentences = 3
+)
+```
+
+Generates:  
+
+```{r}
+#| echo: true
+#| eval: false
+[1] "He wore a intricately designed golden crown, adorned with precious rubies and diamonds that caught the light of a full moon, and from the moment he was born, he was destined for greatness."                                               
+[2] "On his seventh name-day, the prince rode his white stallion, Majdool, through the crowded market of Isfahan, where merchants in tunics and turbans waved in reverence as he passed by, their faces pressed against the walls of their stalls, watching the prince's stately procession."
+[3] "As he approached the grand square, the prince's horse let out a high-pitched whinny, and the prince's mother, the queen, gently corrected the animal with a soft voice, though her eyes were fixed adoringly on her son."  
+```
+
+
+# Step 2: Create images for illustration {background-image="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXY1czBjYXk3YTcyMmIzb3Yyenlja2Z4Mzd1eGFoaXRybDliMDE0MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ciMaPs0ocJCM5vzjvh/giphy.gif"}
+
+## Use Stable Diffusion to generate images
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "1-5|7|10-13|14-17|18-19|21-29"
+req_single_image <- function(prompt,
+                             instructions,
+                             ACCOUNT_ID = Sys.getenv("ACCOUNT_ID"),
+                             API_KEY = Sys.getenv("API_KEY"),
+                             base_url = cf_base_url()){
+
+  url_img <- paste0("https://api.cloudflare.com/client/v4/accounts/", ACCOUNT_ID, "/ai/run/@cf/bytedance/stable-diffusion-xl-lightning")
+
+  # Create the request
+  httr2::request(url_img) |>
+    httr2::req_headers(
+      "Authorization" = paste("Bearer", API_KEY)
+    ) |>
+    httr2::req_body_json(list(prompt = paste0(
+      prompt, " ",
+      instructions
+    ))) |>
+    httr2::req_method("POST")
+}
+
+# Get image if request is successful
+get_image <- function(response){
+  if (response$status_code == 200){
+    png_img <- httr2::resp_body_raw(response)
+  } else{
+    png_img <- NULL
+  }
+  png_img
+}
+```
+
+## Generate some images
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "1-7|8|9-10"
+image_prompt <- "This scene should be illustrated ..."
+reqs <- lapply(
+  new_story,
+  function(x){
+    req_single_image(x, image_prompt)
+  }
+)
+resps <- httr2::req_perform_parallel(reqs, on_error = "continue")
+# All images
+new_all_imgs <- lapply(resps, get_image)
+```
+
+:::: {.fragment .fade-up}
+::: {layout-ncol=3}
+
+![](assets/images/story_img1.jpeg)
+
+![](assets/images/story_img2.jpeg)
+
+![](assets/images/story_img3.jpeg)
+::: 
+::::
+
+# Step 3: Creating Slides {background-image="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXFzcXp4cnF6dHFzZWlzdnoxdThrdnQ4dW1vNmZ3NGplNW1leWQyciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YGbwOKH0N9VoCqAgrx/giphy.gif"}
+
+
+##  {#publishing-system-2 .centered data-menu-title="Publishing system 2" background-color="#0F1620" auto-animate="true"}
+
+::: {style="margin-top: 50px; font-size: 2em; color: #75AADB"}
+Quarto is a new, open-source,<br> scientific and technical<br> publishing system
+:::
+
+::: {.fragment .fade-up}
+![](assets/images/horst_quarto_schematic.png){fig-align="center" width="1100px" fig-alt="A schematic representing the multi-language input (e.g. Python, R, Observable, Julia) and multi-format output (e.g. PDF, html, Word documents, and more) versatility of Quarto."}
+:::
+
+::: footer
+[Source](https://mine.quarto.pub/hello-quarto/#/publishing-system-2)
+:::
+
+
+## Quarto
+
+> An open-source scientific and technical publishing system  
+
+[Quarto Gallery](https://quarto.org/docs/gallery/){preview-link="true"}
+
+![](assets/images/quarto.png)
+
+I used parameters in the quarto file and the `quarto` R package.
+
+## Quarto file (.qmd)
+
+YAML options (instructions):  
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "1|2-3|4-9|10-13|14|16"
+---
+title: "stoRy time with shiny and quarto"
+author: "A story written by you & AI"
+format: 
+    revealjs:
+      embed-resources: true
+      center: true
+      transition: slide
+      background-transition: fade
+params:
+  story_prompt: ""
+  story: ""
+  imgs: ""
+---
+    
+"<Use story and images here for creating slides>"
+```
+
+## quarto R package
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "1|2|3|4-11|14|16-19"
+quarto::quarto_render(
+  input = "<QUARTO FILE>",
+  output_format = "all",
+  metadata = list(
+    theme = "<REVEAL JS THEME>",
+    "title-slide-attributes" = list(
+      "data-background-image" = paste0("data:image/png;base64,", base64enc::base64encode(utils::tail(new_all_imgs, 1)[[1]])),
+      "data-background-size" = "cover",
+      "data-background-opacity" = 0.3
+    )
+  ),
+  quarto_args = c(
+    "--metadata",
+    paste0("title=", "<STORY TITLE>")
+  ),
+  execute_params = list(
+    story_prompt = "<STORY PROMPT>",
+    story = "<STORY TEXT>",
+    imgs = lapply(new_all_imgs, base64enc::base64encode)
+  )
+)
+```
+
+[Reveal Themes](https://quarto.org/docs/presentations/revealjs/themes.html){preview-link="true"}
+
+
+
+# Step 4: Create a web app {background-image="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXYxeHVnYnVmYmFkZDRjYnV6M2oxM3RjZmhhb3ZhY3gwamY2eHlyZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/c2o8GmMCbY4c7HtiQe/giphy.gif"}
+
+## Shiny web application
+
+[Make web apps with shiny](https://shiny.posit.co/){preview-link="true"}
+
+![](assets/images/shiny.png)
+
+## Shiny playground
+
+[shinylive](https://shinylive.io/r/examples/){preview-link="true"}
+
+
+
+## Shiny web application
+
+[App Link](https://storytime-209667139353.us-central1.run.app/){preview-link="true"}
+
+![](assets/images/shiny_anatomy.png)
+
+::: footer
+Source: [The Anatomy of a Shiny Application](https://hosting.analythium.io/the-anatomy-of-a-shiny-application/)
+:::
+
+
+# Step 5: Deploy the application {background-image="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaDMyaGllaXhwbGpzcDRhZjgwOXBsemtpN2J2czVzMWFrMGk3NmFjNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QsyCWMcTm9WZ8zGqWr/giphy.gif"}
+
+## Google Cloud Run
+
+![](assets/images/gcr.png)
+
+## Docker Containers
+
+> "It runs on my computer"
+
+::: columns
+::: {.column width="50%"}
+> A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another.
+:::
+
+::: {.column width="50%"}
+![](assets/images/containers.png)
+:::
+
+::: footer
+[Source](https://www.docker.com/resources/what-container/)
+:::
+
+:::
+
+
+## Dockerfile
+
+![](assets/images/containers2.webp)
+
+For an example shiny app:
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "1-2|4-5|7-8|10-11|13-14|16-17"
+# Base R Shiny image
+FROM rocker/shiny
+
+# Make a directory in the container
+RUN mkdir /home/shiny-app
+
+# Install R dependencies
+RUN R -e "install.packages(c('dplyr', 'ggplot2', 'gapminder'))"
+
+# Copy the Shiny app code
+COPY app.R /home/shiny-app/app.R
+
+# Expose the application port
+EXPOSE 8180
+
+# Run the R Shiny app
+CMD Rscript /home/shiny-app/app.R
+```
+
+::: footer
+[How To Run Shiny Apps in a Docker Container;](https://www.appsilon.com/post/r-shiny-docker-getting-started) [Image source](https://nilesh93.medium.com/practical-guide-on-writing-a-dockerfile-for-your-application-89376f88b3b5)
+:::
+
+
+## Push to GitHub
+
+[GitHub Repo for stoRytime](https://github.com/durraniu/stoRytimegcp){preview-link="true"}
+
+[App Link](https://storytime-209667139353.us-central1.run.app/){preview-link="true"}
+
+
+## Google Cloud Run deployment
+
+![](assets/images/gcr_workflow.gif)
+
+
+
+# Step 6: Celebrate 🎉 
+
+![](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGtpenpoNHNlYWl2OHN6bWo0a2RiZHJvYm95dWtvYWtlNWF6YWs2eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9ODU1JuESgER602OgO/giphy.gif)
+
+
+# Questions and Contact
+
+- umairdurrani.com  
+- @transport-talk.bsky.social  
+
+Try the app
+
+![](assets/images/qr-code.png)
+

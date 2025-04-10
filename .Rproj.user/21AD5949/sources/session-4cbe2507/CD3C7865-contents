@@ -1,0 +1,149 @@
+---
+pagetitle: "Building Your Pit of Success"
+format: 
+  revealjs:
+    transition: "fade"
+    backgroundTransition: "fade"
+    height: 1000
+    width: 1600
+    margin: 0.05
+    highlight-style: oblivion
+    theme: [night, assets/custom.scss]
+---
+
+##  {background-image="assets/images/flow1.jpg"}
+
+[Building Your Pit of Success]{.custom-title}
+
+[Practical Strategies for Shiny App]{.custom-subtitle1}
+[Development and Deployment]{.custom-subtitle2}
+
+[Umair Durrani]{.custom-author}
+
+[[Slides: to be changed](https://example.com)]{.custom-url}
+
+
+## About Me
+
+
+> Umair Durrani 
+
+
+::: {.fragment}
+- Data Scientist and Shiny Developer at Presage Group Inc. 
+  - Develop apps
+  - Analyze and present data
+:::
+
+::: {.fragment}
+- [Shiny Meetings](https://github.com/shiny-meetings/shiny-meetings)  
+:::
+
+
+## About You
+
+:::: columns
+::: {.column width="50%"}
+::: {.fragment}
+<h4>Cat in Flow</h4>
+
+<img src="assets/images/flow1.jpg" width="500" height="300"> 
+<br>
+
+> Cat is a solitary animal, but its home is devastated by a great flood
+(IMDB)
+:::
+
+:::
+
+
+::: {.column width="50%"}
+::: {.fragment}
+<h4>New Shiny Developer</h4>
+
+<img src="assets/images/developer1.jpg" width="500" height="300"> 
+<br>
+
+> You work with data, but now need to create software, i.e., shiny
+:::
+:::
+::::
+
+
+::: {.fragment}
+[6 practical strategies for development and deployment]{.custom-subtitle3}
+:::
+
+
+## Strategies
+
+<ol class="custom-numbered-list">
+  <li>Creating beautiful app layouts</li>
+  <li>Write robust code</li>
+  <li>Monitor your app</li>
+  <li>Improve user experience</li>
+  <li>Explore the deployment options</li>
+  <li>Learn and Practice</li>
+</ol>
+
+
+## Demo App
+
+- [Google Cloud Run Link](https://storytime-140459561836.us-central1.run.app){preview-link="true"}  
+
+
+
+- [Shinyapps Link](https://storytime-140459561836.us-central1.run.app/){preview-link="true"}
+
+## Demo Video
+
+{{< video assets/videos/app_overview.mp4 >}}
+
+
+# 1. Creating Beautiful Layouts
+
+## Use AI Tools
+
+- [Shiny Assistant](https://gallery.shinyapps.io/assistant/#) is trained on Shiny source code  
+
+  * Available for both Shiny for R and Python  
+  
+<br>
+  
+- [Ploomber AI Editor](https://editor.ploomber.io/) has more features:  
+
+  * Provide an image with text instructions  
+  * Download complete project  
+  
+::: {.fragment}
+[Both heavily use `bslib`]{.custom-subtitle3}
+:::
+  
+## Ploomber AI Editor Example
+
+:::: columns
+::: {.column width="50%"}
+::: {.fragment}
+
+<h4>Inspiration</h4>
+
+<img src="assets/images/story_spark.PNG" width="500" height="300"> 
+<br>
+
+**Prompt:** Create a shiny app that replicates the user interface in the attached image. Clicking the "create story" button should scroll to the "create your story" section. Skip the "try it for free" link.
+:::
+
+:::
+
+
+::: {.column width="50%"}
+::: {.fragment}
+<h4>Result</h4>
+
+<img src="assets/images/story_ploomber.gif" width="500" height="300"> 
+<br>
+
+[Ploomber project link](https://editor.ploomber.io/editor/story-creator-fc9e)
+:::
+:::
+::::
